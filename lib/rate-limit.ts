@@ -12,7 +12,10 @@ const redis =
       })
     : null;
 
-function createSlidingWindow(limit: number, duration: string) {
+function createSlidingWindow(
+  limit: number,
+  duration: Parameters<typeof Ratelimit.slidingWindow>[1],
+) {
   if (!redis) {
     return null;
   }

@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Tier {
+  TRIAL
+  PRO
+  ENTERPRISE
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum SkillSource {
+  USER
+  GITHUB_SYNC
+}
+
+enum SkillStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SyncStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+model User {
+  id            String      @id @default(cuid())
+  email         String      @unique
+  name          String?
+  image         String?
+  passwordHash  String?
+  tier          Tier        @default(TRIAL)
+  role          UserRole    @default(USER)
+  isBanned      Boolean     @default(false)
+  skillsCreated Int         @default(0)
+  skills        Skill[]
+  reviews       Review[]
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Skill {
+  id             String       @id @default(cuid())
+  slug           String       @unique
+  title          String
+  description    String
+  content        String       @db.Text
+  category       String
+  tags           String[]
+  compatibility  String[]
+  sourceType     SkillSource  @default(USER)
+  sourceRepo     String?
+  sourcePath     String?
+  sourceSha      String?
+  contentHash    String
+  githubUrl      String?
+  downloads      Int          @default(0)
+  rating         Float?
+  ratingCount    Int          @default(0)
+  isPublic       Boolean      @default(true)
+  status         SkillStatus  @default(PUBLISHED)
+  publishedAt    DateTime?
+  author         User         @relation(fields: [authorId], references: [id])
+  authorId       String
+  reviews        Review[]
+  versions       SkillVersion[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([sourceRepo, sourcePath])
+  @@index([contentHash])
+  @@index([status, isPublic, createdAt])
+}
+
+model SkillVersion {
+  id           String   @id @default(cuid())
+  skill        Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  skillId      String
+  version      String
+  content      String   @db.Text
+  metadataJson Json?
+  contentHash  String
+  createdAt    DateTime @default(now())
+
+  @@unique([skillId, version])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  skill     Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  skillId   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([skillId, userId])
+}
+
+model SkillSyncJob {
+  id            String     @id @default(cuid())
+  repo          String
+  status        SyncStatus @default(RUNNING)
+  startedAt     DateTime   @default(now())
+  finishedAt    DateTime?
+  importedCount Int        @default(0)
+  updatedCount  Int        @default(0)
+  errorCount    Int        @default(0)
+  log           String?
+}
+
+model UsageLog {
+  id               String   @id @default(cuid())
+  userId           String
+  endpoint         String
+  model            String?
+  promptTokens     Int      @default(0)
+  completionTokens Int      @default(0)
+  createdAt        DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}

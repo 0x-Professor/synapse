@@ -1,37 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Synapse
 
-## Getting Started
+Synapse is a full-stack skills marketplace for Claude/Cursor-compatible `SKILL.md` workflows.
 
-First, run the development server:
+## Implemented MVP
+
+- Next.js App Router + TypeScript + Tailwind
+- Auth.js (Credentials + Google + GitHub)
+- Prisma schema for users, skills, versions, reviews, sync jobs, usage logs
+- Skills browse/detail/create flows
+- Trial tier guard (`3` skills max)
+- GitHub sync endpoint for `ComposioHQ/awesome-claude-skills`
+- GitHub Models generation endpoint with rate limiting hooks
+- Vercel cron config for nightly + weekly sync
+- Unit tests (Vitest)
+
+## Quickstart
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Copy env file:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Set `DATABASE_URL` to Supabase Postgres and fill OAuth/env keys.
+
+4. Generate Prisma client and run migration:
+
+```bash
+npm run prisma:generate
+npm run prisma:migrate
+```
+
+5. Run local dev:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Endpoints
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `GET/POST /api/skills`
+- `GET/PATCH /api/skills/:idOrSlug`
+- `POST /api/skills/:id/reviews`
+- `POST/GET /api/github/sync`
+- `GET /api/github/sync/:jobId`
+- `POST /api/llm/generate-skill`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment (Vercel Free-first)
 
-## Learn More
+1. Import project in Vercel.
+2. Set environment variables from `.env.example`.
+3. Configure Supabase Postgres + Supabase Storage.
+4. Configure Upstash Redis keys for rate limits.
+5. Set `CRON_SECRET`; Vercel cron hits `/api/github/sync` per `vercel.json`.
 
-To learn more about Next.js, take a look at the following resources:
+## Validation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
+```bash
+npm run lint
+npm run test
+npm run build
+```

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
@@ -172,3 +172,4 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(created, { status: 201 });
 }
+

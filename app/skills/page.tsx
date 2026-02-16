@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+﻿import { db } from "@/lib/db";
 import { SkillCard } from "@/components/skill-card";
 import { SkillStatus } from "@prisma/client";
 
@@ -75,3 +75,4 @@ export default async function SkillsPage({ searchParams }: Props) {
     </main>
   );
 }
+

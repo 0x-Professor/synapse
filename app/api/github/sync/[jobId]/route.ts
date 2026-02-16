@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
@@ -20,3 +20,4 @@ export async function GET(
 
   return NextResponse.json(job);
 }
+

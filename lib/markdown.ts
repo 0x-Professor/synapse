@@ -1,4 +1,4 @@
-import sanitizeHtml from "sanitize-html";
+﻿import sanitizeHtml from "sanitize-html";
 
 export function sanitizeMarkdown(markdown: string): string {
   return sanitizeHtml(markdown, {
@@ -7,3 +7,4 @@ export function sanitizeMarkdown(markdown: string): string {
     textFilter: (text) => text,
   });
 }
+

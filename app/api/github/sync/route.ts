@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/session";
 import { enforceRateLimit, rateLimiters } from "@/lib/rate-limit";
 import { syncComposioSkills } from "@/lib/github/sync";
@@ -35,3 +35,4 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   return handleSync(request);
 }
+

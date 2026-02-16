@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 import { canCreateSkill } from "@/lib/tier";
 
 describe("canCreateSkill", () => {
@@ -12,3 +12,4 @@ describe("canCreateSkill", () => {
     expect(canCreateSkill("ENTERPRISE", 999)).toBe(true);
   });
 });
+

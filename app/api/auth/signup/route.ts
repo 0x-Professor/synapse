@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
@@ -39,3 +39,4 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(user, { status: 201 });
 }
+

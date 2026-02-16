@@ -1,4 +1,4 @@
-import { Tier, UserRole } from "@prisma/client";
+﻿import { Tier, UserRole } from "@prisma/client";
 import { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
@@ -11,3 +11,4 @@ declare module "next-auth" {
     } & DefaultSession["user"];
   }
 }
+

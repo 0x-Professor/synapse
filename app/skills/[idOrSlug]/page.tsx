@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+﻿import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
@@ -42,7 +42,7 @@ export default async function SkillDetailPage({ params }: Props) {
           ))}
         </div>
         <p className="mt-4 text-sm text-neutral-500">
-          By {skill.author.name ?? "Unknown"} � Compatible with {skill.compatibility.join(", ")}
+          By {skill.author.name ?? "Unknown"} · Compatible with {skill.compatibility.join(", ")}
         </p>
       </header>
 
@@ -68,3 +68,4 @@ export default async function SkillDetailPage({ params }: Props) {
     </main>
   );
 }
+

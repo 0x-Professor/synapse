@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
 type SkillCardProps = {
   id: string;
@@ -49,3 +49,4 @@ export function SkillCard(skill: SkillCardProps) {
     </article>
   );
 }
+

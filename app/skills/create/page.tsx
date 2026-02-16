@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { SkillEditor } from "@/components/skill-editor";
@@ -89,3 +89,4 @@ export default function CreateSkillPage() {
     </main>
   );
 }
+

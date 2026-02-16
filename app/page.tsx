@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { CodePlayground } from "@/components/code-playground";
 
 export default function Home() {
@@ -25,3 +25,4 @@ export default function Home() {
     </main>
   );
 }
+

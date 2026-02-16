@@ -1,4 +1,4 @@
-import { z } from "zod";
+﻿import { z } from "zod";
 
 const API_URL = "https://models.inference.ai.azure.com/chat/completions";
 
@@ -78,3 +78,4 @@ export async function generateSkillWithGitHubModels(input: GenerateSkillInput) {
     completionTokens: data.usage?.completion_tokens ?? 0,
   };
 }
+

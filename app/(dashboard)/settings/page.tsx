@@ -1,4 +1,4 @@
-import { getSession } from "@/lib/session";
+﻿import { getSession } from "@/lib/session";
 
 export default async function SettingsPage() {
   const session = await getSession();
@@ -12,3 +12,4 @@ export default async function SettingsPage() {
     </main>
   );
 }
+

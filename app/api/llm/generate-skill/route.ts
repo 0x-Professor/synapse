@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { generateSkillInputSchema, generateSkillWithGitHubModels } from "@/lib/llm/githubModelsProvider";
 import { getSession } from "@/lib/session";
 import { enforceRateLimit, rateLimiters } from "@/lib/rate-limit";

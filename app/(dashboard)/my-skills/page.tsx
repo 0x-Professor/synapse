@@ -1,4 +1,4 @@
-﻿import { getSession } from "@/lib/session";
+import { getSession } from "@/lib/session";
 import { db } from "@/lib/db";
 import Link from "next/link";
 

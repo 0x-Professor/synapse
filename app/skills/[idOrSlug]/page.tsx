@@ -1,4 +1,4 @@
-﻿import { notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";

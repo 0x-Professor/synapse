@@ -1,4 +1,4 @@
-﻿import { Tier } from "@prisma/client";
+import { Tier } from "@prisma/client";
 
 export function canCreateSkill(tier: Tier, skillsCreated: number): boolean {
   if (tier === "TRIAL") {

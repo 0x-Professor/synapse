@@ -1,4 +1,4 @@
-﻿import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -64,10 +64,17 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, user }) {
       if (session.user) {
-        session.user.id = user.id;
-        session.user.role = user.role;
-        session.user.tier = user.tier;
-        session.user.isBanned = user.isBanned;
+        const userRecord = await db.user.findUnique({
+          where: { id: user.id },
+          select: { id: true, role: true, tier: true, isBanned: true },
+        });
+
+        if (userRecord) {
+          session.user.id = userRecord.id;
+          session.user.role = userRecord.role;
+          session.user.tier = userRecord.tier;
+          session.user.isBanned = userRecord.isBanned;
+        }
       }
       return session;
     },

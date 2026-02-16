@@ -1,4 +1,4 @@
-﻿import { z } from "zod";
+import { z } from "zod";
 
 const API_URL = "https://models.inference.ai.azure.com/chat/completions";
 
